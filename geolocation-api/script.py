@@ -1,38 +1,54 @@
-from flask import Flask, jsonify
-import json
+from flask import Flask, jsonify, request
+import requests
 
 app = Flask(__name__)
 
-# Função auxiliar para carregar o "banco" de dados
-def carregar_clima():
-    with open("clima.json", "r", encoding="utf-8") as f:
-        return json.load(f)
+# Base da API original
+BASE_URL = "http://localhost:8000"
 
 @app.route("/")
 def home():
-    return carregar_clima()
+    return jsonify({"mensagem": "API Consumidora de Clima"})
 
-@app.route("/clima/atual")
-def clima_atual():
-    dados = carregar_clima()
-    atual = dados["current"]
-    return jsonify({
-        "temperatura": atual["temp"],
-        "sensacao_termica": atual["feels_like"],
-        "descricao": atual["weather"][0]["description"]
-    })
 
-@app.route("/clima/previsao")
-def previsao():
-    dados = carregar_clima()
-    previsoes = []
-    for dia in dados["daily"]:
-        previsoes.append({
-            "minima": dia["temp"]["min"],
-            "maxima": dia["temp"]["max"],
-            "descricao": dia["weather"][0]["description"]
-        })
-    return jsonify(previsoes)
+@app.route("/filtrar/temperatura")
+def filtrar_temperatura():
+    try:
+        min_temp = float(request.args.get("min", -100))
+        max_temp = float(request.args.get("max", 100))
+
+        resposta = requests.get(f"{BASE_URL}/clima/previsao")
+        previsoes = resposta.json()
+
+        filtrados = [
+            dia for dia in previsoes
+            if min_temp <= dia["minima"] and dia["maxima"] <= max_temp
+        ]
+
+        return jsonify(filtrados)
+
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+
+
+@app.route("/filtrar/descricao")
+def filtrar_descricao():
+    try:
+        termo = request.args.get("termo", "").lower()
+
+        resposta = requests.get(f"{BASE_URL}/clima/previsao")
+        previsoes = resposta.json()
+
+        filtrados = [
+            dia for dia in previsoes
+            if termo in dia["descricao"].lower()
+        ]
+
+        return jsonify(filtrados)
+
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8000)  # Mudando para a porta 8000
+    app.run(debug=True, port=8001)
