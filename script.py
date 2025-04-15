@@ -10,7 +10,7 @@ def carregar_clima():
 
 @app.route("/")
 def home():
-    return jsonify({"mensagem": "API de Clima - Curitiba 🌦"})
+    return carregar_clima()
 
 @app.route("/clima/atual")
 def clima_atual():
