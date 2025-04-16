@@ -17,4 +17,4 @@ COPY clima.json .
 EXPOSE 5001
 
 # Comando para rodar o script
-CMD ["python3", "script.py"]
+CMD ["python", "script.py"]
