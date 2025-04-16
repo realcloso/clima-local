@@ -2,10 +2,14 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
+# Copia o código-fonte para dentro do container
 COPY . .
 
-RUN pip install --no-cache-dir flask
+# Instala o Flask e o Requests
+RUN pip install --no-cache-dir flask requests
 
-EXPOSE 8000
+# Expondo a porta 5002 para acessar o serviço
+EXPOSE 5002
 
-CMD ["python", "app.py"]
+# Comando para iniciar o script
+CMD ["python", "script.py"]

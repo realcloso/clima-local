@@ -35,4 +35,4 @@ def previsao():
     return jsonify(previsoes)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8000)  # Mudando para a porta 8000
+    app.run(debug=True, port=5001)

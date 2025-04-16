@@ -1,14 +1,20 @@
 FROM python:3.11-slim
 
-WORKDIR /app
+# Definindo o diretório de trabalho
+WORKDIR /clima-api
 
-COPY requirements.txt requirements.txt
+# Atualizando o pip
+RUN pip install --no-cache-dir --upgrade pip
 
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+# Instalando dependências necessárias
+RUN pip install --no-cache-dir flask
 
-COPY . .
+# Copiando apenas arquivos necessários (como clima.json e script.py)
+COPY script.py .
+COPY clima.json .
 
-EXPOSE 5000
+# Expondo a porta correta
+EXPOSE 5001
 
-CMD ["python", "app.py"]
+# Comando para rodar o script
+CMD ["python3", "script.py"]

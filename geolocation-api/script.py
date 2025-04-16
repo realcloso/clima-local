@@ -4,7 +4,7 @@ import requests
 app = Flask(__name__)
 
 # Base da API original
-BASE_URL = "http://localhost:8000"
+BASE_URL = "http://localhost:5001"
 
 @app.route("/")
 def home():
@@ -51,4 +51,4 @@ def filtrar_descricao():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8001)
+    app.run(debug=True, port=5002)
