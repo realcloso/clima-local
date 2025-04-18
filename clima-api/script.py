@@ -3,7 +3,6 @@ import json
 
 app = Flask(__name__)
 
-# Função auxiliar para carregar o "banco" de dados
 def carregar_clima():
     with open("clima.json", "r", encoding="utf-8") as f:
         return json.load(f)
@@ -35,4 +34,4 @@ def previsao():
     return jsonify(previsoes)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    app.run(debug=True, host="0.0.0.0", port=5001)

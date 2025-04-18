@@ -5,7 +5,7 @@ NETWORK_NAME="my_custom_network"
 CONTAINER_NAME="geolocation-api"
 IMAGE_NAME="geolocation-api-image"
 PORT_HOST=5002
-PORT_CONTAINER=8000
+PORT_CONTAINER=5002
 
 echo "=========================="
 echo " 🌍 Iniciando Geolocation API"

@@ -1,3 +1,78 @@
-docker build -t geolocation-api-image .
+# ================================
+# 🛠️ BUILD DAS IMAGENS
+# ================================
 
-docker build -t clima-api-image .
+# Build da imagem da API de geolocalização
+docker build -t geolocation-api-image ./geolocation-api
+
+# Build da imagem da API de clima
+docker build -t clima-api-image ./clima-api
+
+# ================================
+# 🧪 TESTES RÁPIDOS DAS IMAGENS
+# ================================
+
+# Rodar o container da API de clima manualmente
+docker run --rm -p 5001:5001 clima-api-image
+
+# Rodar o container da API de geolocalização manualmente
+docker run --rm -p 5002:8000 geolocation-api-image
+
+# ================================
+# 📡 EXECUÇÃO COM REDE DOCKER
+# ================================
+
+# Executa a API de clima com rede personalizada
+bash clima-api/run-weather.sh
+
+# Executa a API de geolocalização com rede personalizada
+bash geolocation-api/run-geolocation.sh
+
+# ================================
+# 🔍 GERENCIAMENTO DE CONTAINERS
+# ================================
+
+# Listar containers em execução
+docker ps
+
+# Listar todos os containers (inclusive parados)
+docker ps -a
+
+# Parar um container
+docker stop <nome-ou-id-do-container>
+
+# Remover um container
+docker rm <nome-ou-id-do-container>
+
+# ================================
+# 📦 GERENCIAMENTO DE IMAGENS
+# ================================
+
+# Listar imagens disponíveis
+docker images
+
+# Remover uma imagem
+docker rmi <nome-ou-id-da-imagem>
+
+# ================================
+# 🌐 GERENCIAMENTO DE REDES
+# ================================
+
+# Listar redes Docker
+docker network ls
+
+# Criar rede customizada (caso necessário)
+docker network create my_custom_network
+
+# Remover rede (caso não esteja sendo usada)
+docker network rm my_custom_network
+
+# ================================
+# 🧹 LIMPEZA DE RECURSOS DOCKER
+# ================================
+
+# Remover containers parados, redes não usadas, imagens dangling
+docker system prune
+
+# Remover tudo com confirmação
+docker system prune -a
